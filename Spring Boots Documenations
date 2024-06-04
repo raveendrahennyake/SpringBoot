@@ -1,0 +1,57 @@
+Main HTTP methods=>
+@GetMapping
+@PostMapping
+@DelectMapping
+@PutMapping
+
+Main Layer In SpringBoots
+Model
+Controll
+Servise
+Repository
+
+
+@GetMapping
+@GetMapping("/FirtsOne")
+    public List <Book> getbook () {
+        return bookService.getbook();
+
+ public List <Book> getbook () {
+        return bookReposotory .findAll();
+    }
+
+@GetMapping("/{id}")
+    public Optional <Book> getbooks ( Integer id) {
+        return bookService.getbooks(id);
+
+ public Optional <Book> getbooks (Integer id) {
+        return bookReposotory.findById(id);
+    }
+
+
+@GetMapping("/sectiontwo")
+    public Book getbooks (String tilte) {
+        return bookService.getbookse(tilte);
+    }
+
+ public Book getbookse (String tilte) {
+        return bookReposotory.findBytilte("War and Peace");
+
+    }
+
+
+@PostMapping
+ @PostMapping("/addBooks")
+    public ResponseEntity<Book> addbooks(@RequestBody CrateBook createBook) {
+        return bookService.addbooks(createBook);
+    }
+
+ public ResponseEntity<Book> addbooks(CrateBook createBook) {
+        Book book=new Book();
+        book.setTilte(createBook.getTilte());
+        book.setDescription(createBook.getDescription());
+        bookReposotory.save(book);
+        ResponseEntity <Book> responseEntity=ResponseEntity.ok(book);
+        return responseEntity;
+
+    }
