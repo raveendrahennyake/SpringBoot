@@ -50,8 +50,48 @@ Repository
         Book book=new Book();
         book.setTilte(createBook.getTilte());
         book.setDescription(createBook.getDescription());
+
+
+
+@DelectMapping
+
+@DeleteMapping("/Delectbook")
+    public  ResponseEntity <String> removebook (@RequestParam Integer id){
+        return bookService.removebook(id);
+
+
+ public ResponseEntity <String> removebook (Integer id) {
+        Optional<Book> optionalBook=bookReposotory.findById(id);
+        if(optionalBook.isPresent()){
+            bookReposotory.deleteById(id);
+            return ResponseEntity.ok("IS A DELECT");
+        }
+        else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+
+@PutMapping("/Updatebook")
+    public ResponseEntity <String>updatebook (@RequestParam Integer id,@RequestParam String newtilte,@RequestParam String  newdescription){
+        return bookService.updatebook(id,newtilte,newdescription);
+    }
         bookReposotory.save(book);
         ResponseEntity <Book> responseEntity=ResponseEntity.ok(book);
         return responseEntity;
+    }
+
+public ResponseEntity <String> updatebook (Integer id,String newtilte,String  newdescription){
+        Optional<Book> optionalBook=bookReposotory.findById(id);
+        if(optionalBook.isPresent()){
+            Book book=optionalBook.get();
+            book.setTilte(newtilte);
+            book.setDescription(newdescription);
+            bookReposotory.save(book);
+            return ResponseEntity.ok("It Is Updates");
+
+        }else  {
+            return ResponseEntity.notFound().build();
+        }
 
     }
